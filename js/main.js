@@ -4,20 +4,26 @@ import {
     generateDiningForm
 } from "./utils.js";
 
+import ExternalServices from "./ExternalServices.js";
+const externalServices = new ExternalServices();
 
+const cuisineData = await externalServices.getCuisines();
 
-
-generateCuisineForm();
+generateCuisineForm(cuisineData);
 
 const formbtn = document.querySelector('#CuisineBtn');
 formbtn.addEventListener('click', (e) => {
     e.preventDefault();
     generatePriceForm();
+    const priceBtn = document.querySelector('#PriceBtn');
+    priceBtnStuff();
 });
 
-const priceBtn = document.querySelector('#PriceBtn');
-if (priceBtn) {
-    console.log("priceBtn exists");
+
+function priceBtnStuff() {
+    const priceBtn = document.querySelector('#PriceBtn');
+    console.log("inside priceBtnStuff");
+
     priceBtn.addEventListener('click', (e) => {
         e.preventDefault();
         generateDiningForm();
