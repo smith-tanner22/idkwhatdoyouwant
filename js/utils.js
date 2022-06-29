@@ -1,41 +1,78 @@
+function generateCuisineForm(data) {
+    console.log(data);
+    const container1 = document.getElementById("stepContainer");
+
+    const nameC = "Cuisine";
 
 
-export function renderWithTemplate(parent, template, data, callback) {
-  const clone = template.content.cloneNode(true);
-  if (callback) {
-    clone = callback(clone, data);
-  }
-  parent.appendChild(clone);
+    container1.innerHTML = renderForm(nameC);
+}
+
+function renderForm(name) {
+    console.log(`This works: ${name}`);
+
+    const newForm = `<form class="${name}" action="">
+    <h3 id="stepHeading">${name}</h3>
+    <div class="container">
+        <input name="chinese" type="checkbox">
+        <label for="chinese">Chinese</label>
+        <input name="bbq" type="checkbox">
+        <label for="bbq">BBQ</label>
+        <input name="mexican" type="checkbox">
+        <label for="mexican">Mexican</label>
+    </div>
+    <button class="button" id="${name}Btn" type="submit">Continue</button>
+</form>`;
+    return newForm;
+}
+
+function renderDynamicForm(name, data) {
+    const newForm = `<form class="${name}" action="">
+    <h3 id="stepHeading">${name}</h3>
+    <div class="container">
+        <input name="chinese" type="checkbox">
+        <label for="chinese">something else</label>
+        <input name="bbq" type="checkbox">
+        <label for="bbq">BBQ</label>
+        <input name="mexican" type="checkbox">
+        <label for="mexican">Mexican</label>
+    </div>
+    <button class="button" id="${name}Btn" type="submit">Continue</button>
+</form>`;
+    return newForm;
+}
+
+function generatePriceForm() {
+    const container1 = document.getElementById("stepContainer");
+
+    const nameP = "Price";
+    // renderForm(nameP);
+
+    container1.innerHTML = renderDynamicForm(nameP);
+}
+
+function generateDiningForm() {
+    const container1 = document.getElementById("stepContainer");
+
+    const nameD = "Dining";
+
+    container1.innerHTML = renderDynamicForm(nameD);
+    const diningBtn = document.querySelector('#DiningBtn');
+    diningBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        getResults('hello');
+    });
 
 }
 
-function convertToText(res) {
-  console.log(res);
-  if (res.ok) {
-    return res.text();
-  } else {
-    throw new Error('No path');
-  }
-}
-
-export async function loadTemplate(path) {
-  const html = await fetch(path).then(convertToText);
-  const template = document.createElement('template');
-  template.innerHTML = html;
-  return template;
+function getResults(results) {
+    console.log(results);
 }
 
 
-export async function loadHeaderFooter() {
-  const header = await loadTemplate('../idkwhatdoyouwant/partials/header.html');
-  const footer = await loadTemplate('../idkwhatdoyouwant/partials/footer.html');
+export {
+    generateCuisineForm,
+    generatePriceForm,
+    generateDiningForm,
 
-  console.log(header);
-    console.log(footer);
-
-  const headerElement = document.getElementById('main-header');
-  const footerElement = document.getElementById('main-footer');
-  renderWithTemplate(headerElement, header);
-  renderWithTemplate(footerElement, footer);
-}
-
+};
