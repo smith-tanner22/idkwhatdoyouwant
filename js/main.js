@@ -12,15 +12,15 @@ var checkedOptions = {};
 const cuisineData = await externalServices.getCuisines();
 const outputContainer = document.getElementById("testContainer");
 
-checkedOptions.cuisine = generateCuisineForm(cuisineData, outputContainer);
+generateCuisineForm(cuisineData, outputContainer);
 
 
-// const cuisineBtn = document.querySelector('#CuisineBtn');
-// cuisineBtn.addEventListener('click', (e) => {
-//     e.preventDefault();
-//     generatePriceForm(cuisineData, outputContainer);
-//     priceBtnStuff();
-// });
+const cuisineBtn = document.querySelector('#CuisineBtn');
+cuisineBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    generatePriceForm(cuisineData, outputContainer);
+    priceBtnStuff();
+});
 
 
 function priceBtnStuff() {

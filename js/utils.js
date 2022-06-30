@@ -7,7 +7,7 @@ function generateCuisineForm(data, outputContainer) {
     const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
 
-    document.querySelector('#' + nameC + "Form").addEventListener('submit', logData);
+    // document.querySelector('#' + nameC + "Form").addEventListener('submit', logData);
 }
 
 function generatePriceForm(data, outputContainer) {
