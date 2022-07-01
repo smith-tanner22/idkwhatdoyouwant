@@ -34,3 +34,22 @@ h3 {
 }
 
 /* Desktop CSS goes here */
+.logo {
+    line-height: 60px;
+    width: 245px;
+    overflow: hidden;
+    display: flex;
+    font-size: 30px;
+    text-align: right;
+    font-family: var(--font-headline);
+}
+
+.logo img {
+    width: 60px;
+    height: 60px;
+}
+
+.logo a {
+    text-decoration: none;
+    color: var(--font-body);
+}

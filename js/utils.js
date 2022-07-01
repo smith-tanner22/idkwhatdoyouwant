@@ -21,7 +21,7 @@ function generatePriceForm(data, outputContainer) {
 function generateDiningForm(data, outputContainer) {
     const nameD = "Dining";
     outputContainer.innerHTML = renderForm(nameD);
-    
+
     const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
     document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
 }
@@ -56,12 +56,62 @@ function setLocalStorage(key) {
     localStorage.setItem(key, formed);
 }
 
-function formDataToJSON(formElement) {    
+function formDataToJSON(formElement) {
     let formData = new FormData(formElement);
     const converted = Object.fromEntries(formData.entries());
     // console.log(converted);
     // converted.tags = formData.getAll("CuisineTag");
     return JSON.stringify(converted);
+}
+
+// function renderDynamicForm(name, data) {
+//     const newForm = `<form class="${name}" action="">
+//     <h3 id="stepHeading">${name}</h3>
+//     <div class="container">
+//         <input name="chinese" type="checkbox">
+//         <label for="chinese">something else</label>
+//         <input name="bbq" type="checkbox">
+//         <label for="bbq">BBQ</label>
+//         <input name="mexican" type="checkbox">
+//         <label for="mexican">Mexican</label>
+//     </div>
+//     <button class="button" id="${name}Btn" type="submit">Continue</button>
+// </form>`;
+//     return newForm;
+// }
+
+export function renderWithTemplate(parent, template, data, callback) {
+    const clone = template.content.cloneNode(true);
+    if (callback) {
+        clone = callback(clone, data);
+    }
+    parent.appendChild(clone);
+}
+
+function convertToText(res) {
+    console.log(res);
+    if (res.ok) {
+        return res.text();
+    } else {
+        throw new Error('No path');
+    }
+}
+export async function loadTemplate(path) {
+    const html = await fetch(path).then(convertToText);
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return template;
+}
+
+export async function loadHeaderFooter() {
+    const header = await loadTemplate('../partials/header.html');
+    const footer = await loadTemplate('../partials/footer.html');
+    console.log(header);
+    console.log(footer);
+    const headerElement = document.getElementById('main-header');
+    const footerElement = document.getElementById('main-footer');
+    renderWithTemplate(headerElement, header);
+    renderWithTemplate(footerElement, footer);
 }
 
 export {
