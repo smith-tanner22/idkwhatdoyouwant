@@ -2,8 +2,11 @@ import {
     generateCuisineForm,
     generatePriceForm,
     generateDiningForm,
-    getResults
+    getResults,
+    loadHeaderFooter
 } from "./utils.js";
+
+loadHeaderFooter();
 
 import ExternalServices from "./ExternalServices.js";
 

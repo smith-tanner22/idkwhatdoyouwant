@@ -21,7 +21,7 @@ function generatePriceForm(data, outputContainer) {
 function generateDiningForm(data, outputContainer) {
     const nameD = "Dining";
     outputContainer.innerHTML = renderForm(nameD);
-    
+
     const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
     document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
 }
@@ -53,7 +53,7 @@ async function logData(e) {
     formDataToJSON(myForm);
 }
 
-function formDataToJSON(formElement) {    
+function formDataToJSON(formElement) {
     let formData = new FormData(formElement);
     // Object.fromEntries creates a new object made from an iterable list like an Array or Map
     // Object.entries takes an object and converts it into an Array that is iterable.
@@ -80,6 +80,40 @@ function formDataToJSON(formElement) {
 // </form>`;
 //     return newForm;
 // }
+
+export function renderWithTemplate(parent, template, data, callback) {
+    const clone = template.content.cloneNode(true);
+    if (callback) {
+        clone = callback(clone, data);
+    }
+    parent.appendChild(clone);
+}
+
+function convertToText(res) {
+    console.log(res);
+    if (res.ok) {
+        return res.text();
+    } else {
+        throw new Error('No path');
+    }
+}
+export async function loadTemplate(path) {
+    const html = await fetch(path).then(convertToText);
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return template;
+}
+
+export async function loadHeaderFooter() {
+    const header = await loadTemplate('../partials/header.html');
+    const footer = await loadTemplate('../partials/footer.html');
+    console.log(header);
+    console.log(footer);
+    const headerElement = document.getElementById('main-header');
+    const footerElement = document.getElementById('main-footer');
+    renderWithTemplate(headerElement, header);
+    renderWithTemplate(footerElement, footer);
+}
 
 export {
     generateCuisineForm,
