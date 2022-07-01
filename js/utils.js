@@ -1,13 +1,11 @@
 function generateCuisineForm(data, outputContainer) {
-    // const container1 = document.getElementById("stepContainer");
-    // container1.innerHTML = renderForm(nameC);
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
 
     const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
 
-    // document.querySelector('#' + nameC + "Form").addEventListener('submit', logData);
+    // document.getElementById("CuisineForm").addEventListener('submit', cuisineInStorage);
 }
 
 function generatePriceForm(data, outputContainer) {
@@ -16,6 +14,7 @@ function generatePriceForm(data, outputContainer) {
 
     const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
     document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+
 }
 
 function generateDiningForm(data, outputContainer) {
@@ -31,8 +30,6 @@ function getResults(results) {
 }
 
 function renderForm(category) {
-    // console.log(`This works: ${name}`);
-
     return `<form id="${category}Form">
     <h3 id="stepHeading">${category}</h3>
     <div class="${category}Container">
@@ -47,22 +44,19 @@ function populateForm(data, outputContainer) {
         <label for="${data}">${data}</label>`;
 }
 
-async function logData(e) {
-    e.preventDefault();
-    var myForm = e.target;
-    formDataToJSON(myForm);
+function setLocalStorage(key) {
+    var myForm = document.getElementById(key + "Form");
+    const formed = formDataToJSON(myForm);
+    console.log(formed);
+    localStorage.setItem(key, formed);
 }
 
 function formDataToJSON(formElement) {
     let formData = new FormData(formElement);
-    // Object.fromEntries creates a new object made from an iterable list like an Array or Map
-    // Object.entries takes an object and converts it into an Array that is iterable.
     const converted = Object.fromEntries(formData.entries());
-    console.log(converted);
-    // if we have radios or checkboxes which share the same name
-    converted.tags = formData.getAll("CuisineTag");
-    console.table(converted);
-    // return converted;
+    // console.log(converted);
+    // converted.tags = formData.getAll("CuisineTag");
+    return JSON.stringify(converted);
 }
 
 // function renderDynamicForm(name, data) {
@@ -117,6 +111,7 @@ export async function loadHeaderFooter() {
 
 export {
     generateCuisineForm,
+    setLocalStorage,
     generatePriceForm,
     generateDiningForm,
     getResults
