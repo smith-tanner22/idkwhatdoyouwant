@@ -1,4 +1,36 @@
-.span-dont {
+.dont {
     color: red;
     font-weight: bolder;
 }
+
+.genericForm {
+    display: grid;
+    align-items: center;
+}
+
+#itemsContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#itemsContainer div label {
+    font-size: xx-large;
+}
+
+#itemsContainer div input {
+    padding-left: 10px;
+}
+
+button {
+    background-color: chartreuse;
+    margin: auto;
+    padding: 20px;
+    font-size: x-large;
+    border-radius: 15px;
+}
+
+h3 {
+    font-size: xx-large;
+}
+
+/* Desktop CSS goes here */
