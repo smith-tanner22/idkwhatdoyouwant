@@ -1,31 +1,41 @@
 import {
     generateCuisineForm,
     generatePriceForm,
-    generateDiningForm
+    generateDiningForm,
+    getResults
 } from "./utils.js";
 
 import ExternalServices from "./ExternalServices.js";
+
 const externalServices = new ExternalServices();
-
+var checkedOptions = {};
 const cuisineData = await externalServices.getCuisines();
+const outputContainer = document.getElementById("testContainer");
 
-generateCuisineForm(cuisineData);
+generateCuisineForm(cuisineData, outputContainer);
 
-const formbtn = document.querySelector('#CuisineBtn');
-formbtn.addEventListener('click', (e) => {
+
+const cuisineBtn = document.querySelector('#CuisineBtn');
+cuisineBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    generatePriceForm();
-    const priceBtn = document.querySelector('#PriceBtn');
+    generatePriceForm(cuisineData, outputContainer);
     priceBtnStuff();
 });
 
 
 function priceBtnStuff() {
     const priceBtn = document.querySelector('#PriceBtn');
-    console.log("inside priceBtnStuff");
-
     priceBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        generateDiningForm();
+        generateDiningForm(cuisineData, outputContainer);
+        diningStuff();
+    });
+}
+
+function diningStuff() {
+    const diningBtn = document.querySelector("#DiningBtn");
+    diningBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        getResults("Success!")
     });
 }
