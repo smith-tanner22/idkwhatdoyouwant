@@ -42,8 +42,8 @@ function renderForm(category) {
 
 function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
-    return form.innerHTML = 
-        `<div>
+    return form.innerHTML =
+        `<div class="group">
             <input name="${data}Option" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
