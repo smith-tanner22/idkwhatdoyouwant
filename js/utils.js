@@ -2,6 +2,7 @@ function generateCuisineForm(data, outputContainer) {
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
 
+    const title = document.getElementById
     const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
 
@@ -30,9 +31,10 @@ function getResults(results) {
 }
 
 function renderForm(category) {
-    return `<form id="${category}Form">
+    document.getElementById("title").innerHTML = `Please select which ${category} you <span class="dont">DON'T</span> want`;
+    return `<form class="genericForm" id="${category}Form">
     <h3 id="stepHeading">${category}</h3>
-    <div class="${category}Container">
+    <div id="itemsContainer" class="${category}Container">
     </div>
     <button class="button" id="${category}Btn" type="submit">Continue</button>
     </form>`;
@@ -40,8 +42,11 @@ function renderForm(category) {
 
 function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
-    return form.innerHTML = `<input name="${data}Option" type="checkbox" value="${data}">
-        <label for="${data}">${data}</label>`;
+    return form.innerHTML = 
+        `<div>
+            <input name="${data}Option" type="checkbox" value="${data}">
+            <label for="${data}">${data}</label>
+        </div>`;
 }
 
 function setLocalStorage(key) {
