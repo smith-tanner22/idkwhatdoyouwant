@@ -21,8 +21,6 @@ const outputContainer = document.getElementById("testContainer");
 generateCuisineForm(cuisineData, outputContainer);
 
 
-// Grab local storage
-
 
 /*************************STEP TWO****************************************** */
 const cuisineBtn = document.querySelector('#CuisineBtn');

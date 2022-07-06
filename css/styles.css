@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: #f2545b;
 }
 
@@ -37,7 +37,7 @@ header .logo img {
     border-radius: 25px;
     display: block;
     margin: 0 auto;
-}
+} */
 
 /* header .logo {
     float: left;
@@ -56,7 +56,7 @@ header .logo img {
 } */
 
 
-header .login-btn {
+/* header .login-btn {
     display: inline;
 
     background-color: #ffbf00;
@@ -102,7 +102,7 @@ header .signIn-btn {
 
 #itemsContainer div input {
     padding-left: 10px;
-}
+} */
 
 /* #itemsContainer {
     padding: 48px;
@@ -111,7 +111,7 @@ header .signIn-btn {
     flex-direction: column;
 } */
 
-#itemsContainer .group {
+/* #itemsContainer .group {
     padding-left: 30px;
     margin: 8px;
 }
@@ -179,7 +179,7 @@ h3 {
 
 footer {
     text-align: center;
-}
+} */
 
 /* Desktop CSS goes here */
 /* .logo {

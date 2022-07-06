@@ -12,10 +12,26 @@ function generateCuisineForm(data, outputContainer) {
 function generatePriceForm(data, outputContainer) {
     const nameP = "Price";
     outputContainer.innerHTML = renderForm(nameP);
+    const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
+    console.log();
+    if (Object.keys(cuisineInStorage).length > 1) {
 
+        /********************Filter local storage data************************** */
+        var selectedOptions = [];
+        for (const key in cuisineInStorage) {
+            selectedOptions.push(cuisineInStorage[key]);
+        }
+        console.log(selectedOptions);
+        const newData = data.filter(item => selectedOptions.includes(item));
+        console.log(newData);
+        const formData = newData.map(data => populateForm(data._id, ("." + nameP + "Container")));
+        document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+    }
+    else {
+    console.log(data);
     const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
     document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
-
+    }
 }
 
 function generateDiningForm(data, outputContainer) {
@@ -52,7 +68,7 @@ function populateForm(data, outputContainer) {
 function setLocalStorage(key) {
     var myForm = document.getElementById(key + "Form");
     const formed = formDataToJSON(myForm);
-    console.log(formed);
+    // console.log(formed);
     localStorage.setItem(key, formed);
 }
 
