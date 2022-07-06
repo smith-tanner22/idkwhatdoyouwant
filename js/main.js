@@ -11,12 +11,20 @@ loadHeaderFooter();
 
 import ExternalServices from "./ExternalServices.js";
 
+
+
 const externalServices = new ExternalServices();
+
+/*************************STEP ONE****************************************** */
 const cuisineData = await externalServices.getCuisines();
 const outputContainer = document.getElementById("testContainer");
-
 generateCuisineForm(cuisineData, outputContainer);
 
+
+// Grab local storage
+
+
+/*************************STEP TWO****************************************** */
 const cuisineBtn = document.querySelector('#CuisineBtn');
 cuisineBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -26,6 +34,7 @@ cuisineBtn.addEventListener('click', (e) => {
 });
 
 
+// Step Three
 function priceBtnStuff() {
     const priceBtn = document.querySelector('#PriceBtn');
     priceBtn.addEventListener('click', (e) => {
@@ -36,6 +45,8 @@ function priceBtnStuff() {
     });
 }
 
+
+// Final step
 function diningStuff() {
     const diningBtn = document.querySelector("#DiningBtn");
     diningBtn.addEventListener('click', (e) => {
