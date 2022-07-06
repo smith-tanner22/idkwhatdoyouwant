@@ -55,3 +55,10 @@ function diningStuff() {
         getResults("Success!")
     });
 }
+
+document.querySelector(".login-btn").addEventListener("click", redirect);
+
+function redirect() {
+var url = "https://cse341-restaurant-picker.herokuapp.com/login";
+window.location.href = url;
+}
