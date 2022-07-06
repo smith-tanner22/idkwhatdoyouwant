@@ -2,7 +2,7 @@ function generateCuisineForm(data, outputContainer) {
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
 
-    const title = document.getElementById
+    // const title = document.getElementById
     const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
 
