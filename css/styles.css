@@ -203,10 +203,10 @@ footer {
     text-align: center;
 }
 
-.logo {
-    max-width: 600px;
-    margin: auto;
-    display: block;
+.resultsContainer {
+    display: flex;
+    border: 2px solid black;
+    margin-bottom: 10px;
 }
 
 /* Desktop CSS goes here */
