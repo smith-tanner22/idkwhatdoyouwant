@@ -2,48 +2,75 @@ function generateCuisineForm(data, outputContainer) {
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
 
-    // const title = document.getElementById
     const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
-
-    // document.getElementById("CuisineForm").addEventListener('submit', cuisineInStorage);
 }
 
 function generatePriceForm(data, outputContainer) {
     const nameP = "Price";
     outputContainer.innerHTML = renderForm(nameP);
+    // Get the selected cuisine options in storage
     const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
-    console.log();
-    if (Object.keys(cuisineInStorage).length > 1) {
+    // If there is at least one cuisine option in local storage, filter it out of the
+    // the possible price options and then populate the form
+    if (Object.keys(cuisineInStorage).length > 0) {
+        let originalArray = Object.values(data);
+        let selectedValues = Object.values(cuisineInStorage);
 
-        /********************Filter local storage data************************** */
-        var selectedOptions = [];
-        for (const key in cuisineInStorage) {
-            selectedOptions.push(cuisineInStorage[key]);
-        }
-        console.log(selectedOptions);
-        const newData = data.filter(item => selectedOptions.includes(item));
-        console.log(newData);
-        const formData = newData.map(data => populateForm(data._id, ("." + nameP + "Container")));
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
+        console.log(filteredArray);
+        
+        const formData = filteredArray.map(data => populateForm(data._id, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+        return data = filteredArray;
     }
+    // If no options have been selected, just generate the form and return the original data
     else {
-    console.log(data);
-    const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
-    document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+        const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
+        document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+        return data;
     }
 }
 
 function generateDiningForm(data, outputContainer) {
     const nameD = "Dining";
     outputContainer.innerHTML = renderForm(nameD);
-
-    const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
-    document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+    const priceInStorage = JSON.parse(localStorage.getItem("Price"));
+    // If there is at least one price option in local storage, filter it out of the
+    // the possible options and then populate the form
+    if (Object.keys(priceInStorage).length > 0) {
+        let originalArray = Object.values(data);
+        let selectedValues = Object.values(priceInStorage);
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item._id));
+        console.log(filteredArray);
+        
+        const formData = filteredArray.map(data => populateForm(data.description, ("." + nameD + "Container")));
+        document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+        return data = filteredArray
+    }
+    // If no options have been selected, just generate the form and return whatever was passed in
+    else {
+        const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
+        document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+        return data;
+    }
 }
 
-function getResults(results) {
-    console.log(results);
+function getResults(data) {
+    const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
+    const priceInStorage = JSON.parse(localStorage.getItem("Price"));
+    const diningInStorage = JSON.parse(localStorage.getItem("Dining"));
+    // If at least one option was selected throughout the steps
+    if (Object.keys(diningInStorage).length > 0 || Object.keys(priceInStorage).length > 0 ||
+        Object.keys(cuisineInStorage).length > 0) {
+        let originalArray = Object.values(data);
+        let selectedValues = Object.values(diningInStorage);
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
+        console.log(filteredArray);
+    }
+    else {
+        console.log("Success!");
+    }
 }
 
 function renderForm(category) {
@@ -60,7 +87,7 @@ function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
     return form.innerHTML =
         `<div class="group">
-            <input name="${data}Option" type="checkbox" value="${data}">
+            <input name="${data}" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
 }
@@ -80,22 +107,6 @@ function formDataToJSON(formElement) {
     return JSON.stringify(converted);
 }
 
-// function renderDynamicForm(name, data) {
-//     const newForm = `<form class="${name}" action="">
-//     <h3 id="stepHeading">${name}</h3>
-//     <div class="container">
-//         <input name="chinese" type="checkbox">
-//         <label for="chinese">something else</label>
-//         <input name="bbq" type="checkbox">
-//         <label for="bbq">BBQ</label>
-//         <input name="mexican" type="checkbox">
-//         <label for="mexican">Mexican</label>
-//     </div>
-//     <button class="button" id="${name}Btn" type="submit">Continue</button>
-// </form>`;
-//     return newForm;
-// }
-
 export function renderWithTemplate(parent, template, data, callback) {
     const clone = template.content.cloneNode(true);
     if (callback) {
@@ -105,7 +116,7 @@ export function renderWithTemplate(parent, template, data, callback) {
 }
 
 function convertToText(res) {
-    console.log(res);
+    // console.log(res);
     if (res.ok) {
         return res.text();
     } else {
@@ -122,8 +133,8 @@ export async function loadTemplate(path) {
 export async function loadHeaderFooter() {
     const header = await loadTemplate('../partials/header.html');
     const footer = await loadTemplate('../partials/footer.html');
-    console.log(header);
-    console.log(footer);
+    // console.log(header);
+    // console.log(footer);
     const headerElement = document.getElementById('main-header');
     const footerElement = document.getElementById('main-footer');
     renderWithTemplate(headerElement, header);
