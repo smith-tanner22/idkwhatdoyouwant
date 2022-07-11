@@ -18,7 +18,7 @@ function generatePriceForm(data, outputContainer) {
         let selectedValues = Object.values(cuisineInStorage);
 
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
-        
+
         const formData = filteredArray.map(data => populateForm(data._id, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
         return data = filteredArray;
@@ -42,7 +42,7 @@ function generateDiningForm(data, outputContainer) {
         let selectedValues = Object.values(priceInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item._id));
         console.log(filteredArray);
-        
+
         const formData = filteredArray.map(data => populateForm(data.description, ("." + nameD + "Container")));
         document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
         return data = filteredArray
@@ -66,19 +66,18 @@ async function getResults(data) {
         let selectedValues = Object.values(diningInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
         // If the array ends up being empty by the end
-        if (filteredArray.length < 1){
+        if (filteredArray.length < 1) {
             console.log("Sorry, nothing in your area matched your criteria.")
         } else {
             await fetch("https://cse341-restaurant-picker.herokuapp.com/")
-            .then();
+                .then();
             document.getElementById("title").innerHTML = "Results";
             const formData = filteredArray.map(entry => renderResults(entry));
             document.getElementById("testContainer").innerHTML = formData.join(' ');
             // document.getElementById("#testContainer").innerHTML = results.join(' ');
 
         }
-    }
-    else {
+    } else {
         window.alert("You didn't select anything!");
     }
 }
@@ -104,8 +103,8 @@ function populateForm(data, outputContainer) {
 
 function renderResults(restaurantInfo) {
 
-    return document.getElementById("testContainer").innerHTML = 
-    `<a href="https://www.jimmyjohns.com/menu/">
+    return document.getElementById("testContainer").innerHTML =
+        `<a href="https://www.jimmyjohns.com/menu/">
     <div class="resultsContainer">
         <p>${restaurantInfo.name}</p>
         <img src="https://www.jimmyjohns.com/images/common/jimmyjohns_logo.png">
