@@ -96,7 +96,7 @@ function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
     return form.innerHTML =
         `<div>
-            <input name="${data}" type="checkbox" value="${data}">
+            <input name="${data}" id="${data}" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
 }
