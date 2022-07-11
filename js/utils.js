@@ -18,7 +18,6 @@ function generatePriceForm(data, outputContainer) {
         let selectedValues = Object.values(cuisineInStorage);
 
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
-        console.log(filteredArray);
         
         const formData = filteredArray.map(data => populateForm(data._id, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
@@ -66,10 +65,13 @@ function getResults(data) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(diningInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
-        console.log(filteredArray);
+        // If the array ends up being empty by the end
+        if (filteredArray.length < 1) {
+            console.log("Sorry, nothing in your area matched your criteria.")
+        }
     }
     else {
-        console.log("Success!");
+        window.alert("You didn't select anything!");
     }
 }
 
@@ -86,7 +88,7 @@ function renderForm(category) {
 function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
     return form.innerHTML =
-        `<div class="group">
+        `<div>
             <input name="${data}" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
