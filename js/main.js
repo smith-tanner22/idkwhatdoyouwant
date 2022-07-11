@@ -23,10 +23,9 @@ const outputContainer = document.getElementById("testContainer");
 localStorage.clear();
 generateCuisineForm(foodData, outputContainer);
 
-
-
 /*************************STEP TWO****************************************** */
 const cuisineBtn = document.querySelector('#CuisineBtn');
+if(cuisineBtn){
 cuisineBtn.addEventListener('click', (e) => {
     e.preventDefault();
     // Clear local storage so it's a fresh start every time
@@ -42,6 +41,7 @@ cuisineBtn.addEventListener('click', (e) => {
     priceBtnStuff();
     }
 });
+}
 
 
 // Step Three

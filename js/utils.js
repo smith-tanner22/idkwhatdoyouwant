@@ -55,7 +55,7 @@ function generateDiningForm(data, outputContainer) {
     }
 }
 
-function getResults(data) {
+async function getResults(data) {
     const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
     const priceInStorage = JSON.parse(localStorage.getItem("Price"));
     const diningInStorage = JSON.parse(localStorage.getItem("Dining"));
@@ -66,8 +66,16 @@ function getResults(data) {
         let selectedValues = Object.values(diningInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
         // If the array ends up being empty by the end
-        if (filteredArray.length < 1) {
+        if (filteredArray.length < 1){
             console.log("Sorry, nothing in your area matched your criteria.")
+        } else {
+            await fetch("https://cse341-restaurant-picker.herokuapp.com/")
+            .then();
+            document.getElementById("title").innerHTML = "Results";
+            const formData = filteredArray.map(entry => renderResults(entry));
+            document.getElementById("testContainer").innerHTML = formData.join(' ');
+            // document.getElementById("#testContainer").innerHTML = results.join(' ');
+
         }
     }
     else {
@@ -92,6 +100,26 @@ function populateForm(data, outputContainer) {
             <input name="${data}" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
+}
+
+function renderResults(restaurantInfo) {
+
+    return document.getElementById("testContainer").innerHTML = 
+    `<a href="https://www.jimmyjohns.com/menu/">
+    <div class="resultsContainer">
+        <p>${restaurantInfo.name}</p>
+        <img src="https://www.jimmyjohns.com/images/common/jimmyjohns_logo.png">
+    </div>
+    </a>`;
+
+    // return document.getElementById("testContainer").innerHTML = 
+    // `<a href="${restaurantInfo.restaurantWebsite}">
+    // <div class="resultsContainer">
+    //     <img src="${restaurantInfo.picture}">
+    //     <h3>${restaurantInfo.restaurantName}</h3>
+    // </div>
+    // </a>`;
+
 }
 
 function setLocalStorage(key) {

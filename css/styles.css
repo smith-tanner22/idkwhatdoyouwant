@@ -179,7 +179,13 @@ h3 {
 
 footer {
     text-align: center;
-} */
+} 
+
+.resultsContainer {
+    display: flex;
+    border: 2px solid black;
+    margin-bottom: 10px;
+}
 
 /* Desktop CSS goes here */
 /* .logo {
