@@ -19,7 +19,7 @@ function generatePriceForm(data, outputContainer) {
 
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
         console.log(filteredArray);
-        
+
         const formData = filteredArray.map(data => populateForm(data._id, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
         return data = filteredArray;
@@ -43,7 +43,7 @@ function generateDiningForm(data, outputContainer) {
         let selectedValues = Object.values(priceInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item._id));
         console.log(filteredArray);
-        
+
         const formData = filteredArray.map(data => populateForm(data.description, ("." + nameD + "Container")));
         document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
         return data = filteredArray
@@ -67,8 +67,7 @@ function getResults(data) {
         let selectedValues = Object.values(diningInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
         console.log(filteredArray);
-    }
-    else {
+    } else {
         console.log("Success!");
     }
 }
@@ -87,7 +86,7 @@ function populateForm(data, outputContainer) {
     const form = document.querySelector(outputContainer);
     return form.innerHTML =
         `<div class="group">
-            <input name="${data}" type="checkbox" value="${data}">
+            <input id="${data}" name="${data}" type="checkbox" value="${data}">
             <label for="${data}">${data}</label>
         </div>`;
 }
