@@ -9,13 +9,14 @@ function generateCuisineForm(data, outputContainer) {
 function generatePriceForm(data, outputContainer) {
     const nameP = "Price";
     outputContainer.innerHTML = renderForm(nameP);
-    // Get the selected options in storage
+    // Get the selected cuisine options in storage
     const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
+    // If there is at least one cuisine option in local storage, filter it out of the
+    // the possible price options and then populate the form
     if (Object.keys(cuisineInStorage).length > 0) {
-
-        /********************Filter local storage data************************** */
         let originalArray = Object.values(data);
         let selectedValues = Object.values(cuisineInStorage);
+
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
         console.log(filteredArray);
         
@@ -23,6 +24,7 @@ function generatePriceForm(data, outputContainer) {
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
         return data = filteredArray;
     }
+    // If no options have been selected, just generate the form and return the original data
     else {
         const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
@@ -34,6 +36,8 @@ function generateDiningForm(data, outputContainer) {
     const nameD = "Dining";
     outputContainer.innerHTML = renderForm(nameD);
     const priceInStorage = JSON.parse(localStorage.getItem("Price"));
+    // If there is at least one price option in local storage, filter it out of the
+    // the possible options and then populate the form
     if (Object.keys(priceInStorage).length > 0) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(priceInStorage);
@@ -44,15 +48,21 @@ function generateDiningForm(data, outputContainer) {
         document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
         return data = filteredArray
     }
+    // If no options have been selected, just generate the form and return whatever was passed in
     else {
         const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
         document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+        return data;
     }
 }
 
 function getResults(data) {
+    const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
+    const priceInStorage = JSON.parse(localStorage.getItem("Price"));
     const diningInStorage = JSON.parse(localStorage.getItem("Dining"));
-    if (Object.keys(diningInStorage).length > 0) {
+    // If at least one option was selected throughout the steps
+    if (Object.keys(diningInStorage).length > 0 || Object.keys(priceInStorage).length > 0 ||
+        Object.keys(cuisineInStorage).length > 0) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(diningInStorage);
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
@@ -96,22 +106,6 @@ function formDataToJSON(formElement) {
     // converted.tags = formData.getAll("CuisineTag");
     return JSON.stringify(converted);
 }
-
-// function renderDynamicForm(name, data) {
-//     const newForm = `<form class="${name}" action="">
-//     <h3 id="stepHeading">${name}</h3>
-//     <div class="container">
-//         <input name="chinese" type="checkbox">
-//         <label for="chinese">something else</label>
-//         <input name="bbq" type="checkbox">
-//         <label for="bbq">BBQ</label>
-//         <input name="mexican" type="checkbox">
-//         <label for="mexican">Mexican</label>
-//     </div>
-//     <button class="button" id="${name}Btn" type="submit">Continue</button>
-// </form>`;
-//     return newForm;
-// }
 
 export function renderWithTemplate(parent, template, data, callback) {
     const clone = template.content.cloneNode(true);
