@@ -106,7 +106,7 @@ function renderResults(restaurantInfo) {
     return document.getElementById("testContainer").innerHTML =
         `<a href="https://www.jimmyjohns.com/menu/">
     <div class="resultsContainer">
-        <p>${restaurantInfo.name}</p>
+        <p class="resultsInfo">${restaurantInfo.name}</p>
         <img src="https://www.jimmyjohns.com/images/common/jimmyjohns_logo.png">
     </div>
     </a>`;

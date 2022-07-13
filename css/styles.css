@@ -8,7 +8,8 @@ h1 {
 }
 
 h2,
-h3 {
+h3,
+p {
     font-family: 'Mingzat', sans-serif;
 }
 
@@ -204,10 +205,27 @@ footer {
 }
 
 .resultsContainer {
-    display: flex;
-    border: 2px solid black;
+    background-color: #f5eb83;
+    border-radius: 25px;
+    padding: 2px;
     margin-bottom: 10px;
 }
+
+.resultsContainer img {
+    width: 100px;
+    height: auto;
+    margin: auto;
+    display: block;
+}
+
+.resultsInfo {
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+    color: black;
+}
+
+
 
 /* Desktop CSS goes here */
 /* .logo {
