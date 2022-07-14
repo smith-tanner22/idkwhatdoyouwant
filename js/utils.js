@@ -3,7 +3,7 @@ function generateCuisineForm(data, outputContainer) {
     outputContainer.innerHTML = renderForm(nameC);
     let formData = [];
     const cuisineSet = new Set();
-    
+
     data.map(entry => cuisineSet.add(entry.cuisineType));
     cuisineSet.forEach(thing => formData.push(thing));
 
@@ -28,7 +28,7 @@ function generatePriceForm(data, outputContainer) {
         filteredArray.map(entry => priceSet.add(entry.price));
 
         priceSet.forEach(dollarSign => formData.push(dollarSign));
-        
+
         formData = formData.map(data => populateForm(data, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.sort().join(' ');
         return data = filteredArray;
@@ -113,7 +113,7 @@ async function getResults(data) {
 }
 
 function renderForm(category) {
-    document.getElementById("title").innerHTML = `Please select which ${category} you <span class="dont">DON'T</span> want`;
+    document.getElementById("title").innerHTML = `Please select which <span class="lowercase">${category}</span> you <span class="dont">DON'T</span> want`;
     return `<form class="genericForm" id="${category}Form">
     <h3 id="stepHeading">${category}</h3>
     <div id="itemsContainer" class="${category}Container">
@@ -153,20 +153,22 @@ function renderResults(restaurant) {
 
 async function getAllRestaurant(filtered) {
     const BaseURL = 'https://cse341-restaurant-picker.herokuapp.com/';
-         return await fetch(`${BaseURL}restaurants`)
-            .then(response => response.json())
-            .then(json => {
+    return await fetch(`${BaseURL}restaurants`)
+        .then(response => response.json())
+        .then(json => {
             // console.log(json)
             const myArrayFiltered = json.filter((el) => {
-            return filtered.some((f) => {
+                return filtered.some((f) => {
                     return f._id === el.cuisine;
                 });
-                });
+            });
             console.log(myArrayFiltered)
-            })
-            .catch((error)=>{console.log(error.message)})
-        
-    }
+        })
+        .catch((error) => {
+            console.log(error.message)
+        })
+
+}
 
 function setLocalStorage(key) {
     var myForm = document.getElementById(key + "Form");
