@@ -1,5 +1,4 @@
 function generateCuisineForm(data, outputContainer) {
-    console.log(data);
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
     let formData = [];
@@ -29,7 +28,6 @@ function generatePriceForm(data, outputContainer) {
         filteredArray.map(entry => priceSet.add(entry.price));
 
         priceSet.forEach(dollarSign => formData.push(dollarSign));
-        console.log(formData);
         
         formData = formData.map(data => populateForm(data, ("." + nameP + "Container")));
         document.querySelector("." + nameP + "Container").innerHTML = formData.sort().join(' ');
@@ -59,20 +57,19 @@ function generateDiningForm(data, outputContainer) {
         let selectedValues = Object.values(priceInStorage);
 
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.price));
-        filteredArray.map(entry => diningSet.add(entry.opens));
+        filteredArray.map(entry => diningSet.add(entry.diningStyle));
 
         diningSet.forEach(time => formData.push(time));
-        console.log(formData);
 
-        formData = filteredArray.map(data => populateForm(data.opens, ("." + nameD + "Container")));
+        formData = filteredArray.map(data => populateForm(data.diningStyle, ("." + nameD + "Container")));
         document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data = filteredArray
     }
     // If no options have been selected, just generate the form and return whatever was passed in
     else {
-        data.map(entry => diningSet.add(entry.opens));
+        data.map(entry => diningSet.add(entry.diningStyle));
         diningSet.forEach(time => formData.push(time));
-        formData = formData.map(time => populateForm(time, ("." + nameD + "Container")));
+        formData = formData.map(style => populateForm(style, ("." + nameD + "Container")));
         document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data;
     }
@@ -90,7 +87,7 @@ async function getResults(data) {
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.opens));
         // If the array ends up being empty by the end
         if (filteredArray.length < 1) {
-            console.log("Sorry, nothing in your area matched your criteria.")
+            window.alert("Sorry, nothing in your area matched your criteria.")
         } else {
             getAllRestaurant(filteredArray);
             document.getElementById("title").innerHTML = "Results";
@@ -148,7 +145,7 @@ async function getAllRestaurant(filtered) {
          return await fetch(`${BaseURL}restaurants`)
             .then(response => response.json())
             .then(json => {
-            console.log(json)
+            // console.log(json)
             const myArrayFiltered = json.filter((el) => {
             return filtered.some((f) => {
                     return f._id === el.cuisine;
