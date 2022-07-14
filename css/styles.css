@@ -48,6 +48,22 @@ header .logo img {
     display: block;
 }
 
+.signUp {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.signUp img {
+    max-width: 34px;
+    margin: auto;
+    display: block;
+    transition-duration: 0.4s;
+}
+
+.signUp img:hover {
+    transform: scale(1.3);
+}
+
 #testContainer {
     margin: auto;
     width: 50%;
