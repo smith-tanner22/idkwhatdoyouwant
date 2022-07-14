@@ -62,16 +62,25 @@ function generateDiningForm(data, outputContainer) {
         diningSet.forEach(diningStyle => formData.push(diningStyle));
         console.log(formData);
 
-        formData = formData.map(data => populateForm(data, ("." + nameD + "Container")));
-        console.log(formData);
-        document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
+        formData = formData.map(data => { 
+            if (data != "Dine-in & Drive-thru") {
+                console.log(data);
+            return populateForm(data, ("." + nameD + "Container"));
+            }
+        });
+        document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
         return data = filteredArray
     }
     // If no options have been selected, just generate the form and return whatever was passed in
     else {
         data.map(entry => diningSet.add(entry.diningStyle));
         diningSet.forEach(time => formData.push(time));
-        formData = formData.map(style => populateForm(style, ("." + nameD + "Container")));
+        formData = formData.map(data => { 
+            if (data != "Dine-in & Drive-thru") {
+                console.log(data);
+            return populateForm(data, ("." + nameD + "Container"));
+            }
+        });
         document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data;
     }
