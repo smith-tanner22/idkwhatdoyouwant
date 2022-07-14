@@ -1,14 +1,21 @@
 function generateCuisineForm(data, outputContainer) {
     const nameC = "Cuisine";
     outputContainer.innerHTML = renderForm(nameC);
+    let formData = [];
+    const cuisineSet = new Set();
+    
+    data.map(entry => cuisineSet.add(entry.cuisineType));
+    cuisineSet.forEach(thing => formData.push(thing));
 
-    const formData = data.map(data => populateForm(data.name, ("." + nameC + "Container")));
-    document.querySelector("." + nameC + "Container").innerHTML = formData.join(' ');
+    formData = formData.map(cuisineType => populateForm(cuisineType, ("." + nameC + "Container")));
+    document.querySelector("." + nameC + "Container").innerHTML = formData.sort().join(' ');
 }
 
 function generatePriceForm(data, outputContainer) {
     const nameP = "Price";
     outputContainer.innerHTML = renderForm(nameP);
+    let formData = [];
+    const priceSet = new Set();
     // Get the selected cuisine options in storage
     const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
     // If there is at least one cuisine option in local storage, filter it out of the
@@ -17,16 +24,21 @@ function generatePriceForm(data, outputContainer) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(cuisineInStorage);
 
-        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.name));
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.cuisineType));
+        filteredArray.map(entry => priceSet.add(entry.price));
 
-        const formData = filteredArray.map(data => populateForm(data._id, ("." + nameP + "Container")));
-        document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+        priceSet.forEach(dollarSign => formData.push(dollarSign));
+        
+        formData = formData.map(data => populateForm(data, ("." + nameP + "Container")));
+        document.querySelector("." + nameP + "Container").innerHTML = formData.sort().join(' ');
         return data = filteredArray;
     }
     // If no options have been selected, just generate the form and return the original data
     else {
-        const formData = data.map(data => populateForm(data._id, ("." + nameP + "Container")));
-        document.querySelector("." + nameP + "Container").innerHTML = formData.join(' ');
+        data.map(entry => priceSet.add(entry.price));
+        priceSet.forEach(dollarSign => formData.push(dollarSign));
+        formData = formData.map(price => populateForm(price, ("." + nameP + "Container")));
+        document.querySelector("." + nameP + "Container").innerHTML = formData.sort().join(' ');
         return data;
     }
 }
@@ -34,23 +46,31 @@ function generatePriceForm(data, outputContainer) {
 function generateDiningForm(data, outputContainer) {
     const nameD = "Dining";
     outputContainer.innerHTML = renderForm(nameD);
+    let formData = [];
+    const diningSet = new Set();
+    // Get the price in storage
     const priceInStorage = JSON.parse(localStorage.getItem("Price"));
     // If there is at least one price option in local storage, filter it out of the
     // the possible options and then populate the form
     if (Object.keys(priceInStorage).length > 0) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(priceInStorage);
-        let filteredArray = originalArray.filter(item => !selectedValues.includes(item._id));
-        console.log(filteredArray);
 
-        const formData = filteredArray.map(data => populateForm(data.description, ("." + nameD + "Container")));
-        document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.price));
+        filteredArray.map(entry => diningSet.add(entry.diningStyle));
+
+        diningSet.forEach(time => formData.push(time));
+
+        formData = filteredArray.map(data => populateForm(data.diningStyle, ("." + nameD + "Container")));
+        document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data = filteredArray
     }
     // If no options have been selected, just generate the form and return whatever was passed in
     else {
-        const formData = data.map(data => populateForm(data.description, ("." + nameD + "Container")));
-        document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
+        data.map(entry => diningSet.add(entry.diningStyle));
+        diningSet.forEach(time => formData.push(time));
+        formData = formData.map(style => populateForm(style, ("." + nameD + "Container")));
+        document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data;
     }
 }
@@ -64,16 +84,15 @@ async function getResults(data) {
         Object.keys(cuisineInStorage).length > 0) {
         let originalArray = Object.values(data);
         let selectedValues = Object.values(diningInStorage);
-        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.description));
+        let filteredArray = originalArray.filter(item => !selectedValues.includes(item.opens));
         // If the array ends up being empty by the end
         if (filteredArray.length < 1) {
-            console.log("Sorry, nothing in your area matched your criteria.")
+            window.alert("Sorry, nothing in your area matched your criteria.")
         } else {
-            await fetch("https://cse341-restaurant-picker.herokuapp.com/")
-                .then();
+            getAllRestaurant(filteredArray);
             document.getElementById("title").innerHTML = "Results";
             const formData = filteredArray.map(entry => renderResults(entry));
-            document.getElementById("testContainer").innerHTML = formData.join(' ');
+            document.getElementById("testContainer").innerHTML = formData.sort().join(' ');
             // document.getElementById("#testContainer").innerHTML = results.join(' ');
 
         }
@@ -101,13 +120,13 @@ function populateForm(data, outputContainer) {
         </div>`;
 }
 
-function renderResults(restaurantInfo) {
+function renderResults(restaurant) {
 
     return document.getElementById("testContainer").innerHTML =
-        `<a href="https://www.jimmyjohns.com/menu/">
+        `<a href="${restaurant.restaurantWebsite}">
     <div class="resultsContainer">
-        <p class="resultsInfo">${restaurantInfo.name}</p>
-        <img src="https://www.jimmyjohns.com/images/common/jimmyjohns_logo.png">
+        <p class="resultsInfo">${restaurant.restaurantName}</p>
+        <img src="${restaurant.imgUrl}">
     </div>
     </a>`;
 
@@ -120,6 +139,23 @@ function renderResults(restaurantInfo) {
     // </a>`;
 
 }
+
+async function getAllRestaurant(filtered) {
+    const BaseURL = 'https://cse341-restaurant-picker.herokuapp.com/';
+         return await fetch(`${BaseURL}restaurants`)
+            .then(response => response.json())
+            .then(json => {
+            // console.log(json)
+            const myArrayFiltered = json.filter((el) => {
+            return filtered.some((f) => {
+                    return f._id === el.cuisine;
+                });
+                });
+            console.log(myArrayFiltered)
+            })
+            .catch((error)=>{console.log(error.message)})
+        
+    }
 
 function setLocalStorage(key) {
     var myForm = document.getElementById(key + "Form");
