@@ -59,9 +59,11 @@ function generateDiningForm(data, outputContainer) {
         let filteredArray = originalArray.filter(item => !selectedValues.includes(item.price));
         filteredArray.map(entry => diningSet.add(entry.diningStyle));
 
-        diningSet.forEach(time => formData.push(time));
+        diningSet.forEach(diningStyle => formData.push(diningStyle));
+        console.log(formData);
 
-        formData = filteredArray.map(data => populateForm(data.diningStyle, ("." + nameD + "Container")));
+        formData = formData.map(data => populateForm(data, ("." + nameD + "Container")));
+        console.log(formData);
         document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
         return data = filteredArray
     }
