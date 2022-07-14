@@ -13,6 +13,10 @@ p {
     font-family: 'Mingzat', sans-serif;
 }
 
+h2 {
+    background-color: #f2545b;
+}
+
 #title {
     font-size: 1.7em;
     text-align: center;
@@ -20,7 +24,7 @@ p {
 
 #main_body {
     border: 3px solid black;
-    background-color: #f5676e;
+    background-color: white;
 }
 
 hr {
@@ -124,6 +128,7 @@ header .signIn-btn {
 #itemsContainer {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
 }
 
 #itemsContainer div label {
@@ -214,6 +219,7 @@ button:hover {
 
 h3 {
     font-size: xx-large;
+    margin-top: 0px;
 }
 
 footer {
@@ -475,4 +481,4 @@ footer {
         transform: scale(0, 0) rotateZ(90deg);
         opacity: 0
     }
-} */
+}

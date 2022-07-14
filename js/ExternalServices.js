@@ -72,7 +72,7 @@ export default class ExternalServices {
     }
 
     async getCuisines() {
-        return await fetch(`${BaseURL}cuisines`)
+        return await fetch(`${BaseURL}restaurants`)
             .then(convertToJson).then((data) => data).catch(err => console.log(err));
         // return fetch(`${BaseURL}cuisines`)
         //     .then(response => response.json())
