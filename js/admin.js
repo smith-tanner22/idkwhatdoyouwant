@@ -66,9 +66,9 @@ function renderEditForm(data) {
     
     <label>Dining Style</label>
     <select name="diningStyle">
-    <option value="${data.diningStyle}">Dine-In</option>
-    <option value="${data.diningStyle}">Drive-Thru</option>
-    <option value="${data.diningStyle}">Dine-In & Drive-Thru</option>
+    <option value="${data.diningStyle}">Dine-in</option>
+    <option value="${data.diningStyle}">Drive-thru</option>
+    <option value="${data.diningStyle}">Dine-in & Drive-thru</option>
     </select>
     <button id="editFormbtn">Submit Edit</button>
     </form>`;
@@ -127,9 +127,9 @@ function createNewResturant() {
                 
                     <label>Dining Style</label>
     <select name="diningStyle">
-    <option value="Dine-In">Dine-In</option>
-    <option value="Drive-Thru">Drive-Thru</option>
-    <option value="Dine-In & Drive-Thru">Dine-In & Drive-Thru</option>
+    <option value="Dine-in">Dine-in</option>
+    <option value="Drive-thru">Drive-thru</option>
+    <option value="Dine-in & Drive-thru">Dine-in & Drive-thru</option>
     </select>
                     
                     <button id="editFormbtn">Register New Resturant</button>
