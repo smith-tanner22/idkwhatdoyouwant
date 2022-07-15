@@ -19,6 +19,43 @@ function AddIdDelete(value) {
     })
 }
 
+function closeForm()
+{
+       setInterval(600000)
+       document.querySelector(".EditForm").style.display = "none";
+}
+
+function renderEditForm(data)
+{
+    console.log(data.restaurantName)
+    document.querySelector(".EditForm").style.display = "block";
+    const editDiv= document.querySelector(".EditForm")
+    // editDiv.innerHTML= "hello Edit"
+    var ele= `<form class="editForm">
+    <input type="hidden" name= "_id" value="${data._id}">
+    <input type="hidden" name="cuisine" value="${data.cuisine}">
+    <label>Name of Resturant</label>
+    <input type="text" name="restaurantName" value="${data.restaurantName}">
+    <label>Opening Hours</label>
+    <input type="text" name="opens" value="${data.opens}">
+    <label>Closing Hours</label>
+    <input type="text" name="closes" value="${data.closes}">
+    <label>Phone</label>
+    <input type="text" name="phoneNumber" value="${data.phoneNumber}">
+    <label>Website</label>
+    <input type="text" name="restaurantWebsite" value="${data.restaurantWebsite}">
+    <label>Logo</label>
+    <input type="text" name="imgUrl" value="${data.imgUrl}">
+    <label>Description</label>
+    <input type="text" name="description" value="${data.description}">
+    <label>Address</label>
+    <input type="text" name="address" value="${data.address}">
+    <label>zipCode</label>
+    <input type="text" name="zipCode" value="${data.zipCode}">
+    <button id="editFormbtn">Submit Edit</button>
+    </form>`;
+    editDiv.innerHTML= ele;
+}
 
 
 function AddIdEdit(value) {
@@ -35,16 +72,54 @@ function AddIdEdit(value) {
         restaurantWebsite: "example.com",
         imgUrl: "../pic.jpg"
     };
+    fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        renderEditForm(data)
 
-    fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
+
+        const editbtn = document.querySelector('.editForm');
+        if(editbtn){
+        editbtn.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // const editForm = document.querySelector('.editForm');
+        console.log("Hit edit")
+        
+        
+
+        let formData = new FormData(e.target);
+        const converted = Object.fromEntries(formData.entries())
+
+        fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
-    }).then(() => {
+        body: JSON.stringify(converted),
+        }).then(() => {
         console.log('success');
-    })
+        alert("Success Your Edit has been made")
+        location.reload()
+        })
+
+        })}
+
+
+
+    }).then((data)=>{
+      
+    });
+
+    // fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
+    //     method: 'PUT',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    // }).then(() => {
+    //     console.log('success');
+    // })
 }
 
 function renderAResturant(resturant) {
@@ -70,6 +145,8 @@ function renderAResturant(resturant) {
 
 }
 
+
+
 function renderAllResturant() {
     const BaseURL = 'https://cse341-restaurant-picker.herokuapp.com/';
     fetch(`${BaseURL}restaurants`)
@@ -80,8 +157,7 @@ function renderAllResturant() {
                 const value = renderAResturant(entry)
                 var btn = document.getElementById(`${entry._id}delete`)
                 var btn2 = document.getElementById(`${entry._id}edit`)
-                console.log(btn);
-                console.log(btn2);
+            
                 btn.addEventListener("click", function () {
 
                     AddIdDelete(entry._id)
