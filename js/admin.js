@@ -81,7 +81,7 @@ function createNewResturant() {
         console.log("hello")
         var ele = `<form class="createForm">
                     <input type="hidden" name="cuisine" value="62b9f1ba647a293727fb4f98">
-                    <label>Name of Resturant</label>
+                    <label>Name of Restaurant</label>
                     <input type="text" name="restaurantName" >
                     
                     <label>Description</label>
@@ -90,7 +90,7 @@ function createNewResturant() {
                     <label>Address</label>
                     <input type="text" name="address" >
 
-                    <label>zipCode</label>
+                    <label>Zip Code</label>
                     <input type="text" name="zipCode" >
 
                     <label>Opening Hours</label>
@@ -105,17 +105,32 @@ function createNewResturant() {
                     <label>Website</label>
                     <input type="text" name="restaurantWebsite" >
 
-                    <label>Price Level</label>
-                    <input type="text" name="price" >
+                    <label>Price</label>
+    <select name="price">
+    <option value="$">$</option>
+    <option value="$$">$$</option>
+    <option value="$$$">$$$</option>
+    </select>
 
-                    <label>Cusine Type</label>
-                    <input type="text" name="cuisineType" >
+    <label>Cuisine Type</label>
+    <select name="cuisineType">
+    <option value="Fast Food">Fast Food</option>
+    <option value="America">American</option>
+    <option value="Italian">Italian</option>
+    <option value="Mexican">Mexican</option>
+    <option value="Asian">Asian</option>
+<option value="BBQ">BBQ</option>
+    </select>
 
                     <label>Logo</label>
                     <input type="text" name="imgUrl" >
                 
                     <label>Dining Style</label>
-                    <input type="text" name="diningStyle" >
+    <select name="diningStyle">
+    <option value="Dine-In">Dine-In</option>
+    <option value="Drive-Thru">Drive-Thru</option>
+    <option value="Dine-In & Drive-Thru">Dine-In & Drive-Thru</option>
+    </select>
                     
                     <button id="editFormbtn">Register New Resturant</button>
                 </form>`;
