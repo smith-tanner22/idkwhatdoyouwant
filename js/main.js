@@ -6,48 +6,52 @@ import {
     getResults,
     loadHeaderFooter
 } from "./utils.js";
-
-loadHeaderFooter();
-
 import ExternalServices from "./ExternalServices.js";
 
-
+// Generate header and footer onto the page.
+loadHeaderFooter();
 
 const externalServices = new ExternalServices();
 
 /*************************STEP ONE****************************************** */
 
-// Changed to "var" so that it can be manipulated
+// Get all the restaurants from the database.
 var foodData = await externalServices.getCuisines();
+// We target this element a lot, so it's a variable for ease of typing.
 const outputContainer = document.getElementById("testContainer");
+// Clear local storage every time a new session is loaded.
 localStorage.clear();
+// Generate the initial form with cuisine options.
 generateCuisineForm(foodData, outputContainer);
 
-/*************************STEP TWO****************************************** */
+/*************************STEP TWO*******************************************/
 const cuisineBtn = document.querySelector('#CuisineBtn');
-if(cuisineBtn){
+// Once the button is generated, add an event listener to it.
+if (cuisineBtn) {
 cuisineBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    // Clear local storage so it's a fresh start every time
+    // Set a local storage key to "Cuisine" to store selected cuisine options.
     setLocalStorage("Cuisine");
     const cuisineInStorage = JSON.parse(localStorage.getItem("Cuisine"));
+
+    // Initialize a Set to save unique cuisine types, then add those into an array.
     let comparator = new Set();
     foodData.map(entry => comparator.add(entry.cuisineType));
     
-    // If they selected everything
+    // If they selected everything.
     if (comparator.size === Object.keys(cuisineInStorage).length){
         window.alert("You selected everything. Please allow at least one option available.");
     } else {
-    // Change foodData to now exclude the selected cuisine options
+    // Change foodData to now exclude the selected cuisine options.
     foodData = generatePriceForm(foodData, outputContainer);
     priceBtnStuff();
     }
 });
 }
 
-
-// Step Three
+/*************************STEP THREE*******************************************/
 function priceBtnStuff() {
+    // Pretty much all the same logic as above, just now with the price.
     const priceBtn = document.querySelector('#PriceBtn');
     priceBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -66,9 +70,9 @@ function priceBtnStuff() {
     });
 }
 
-
-// Final step
+/*************************FINAL STEP*******************************************/
 function diningStuff() {
+    // Same thing as before.
     const diningBtn = document.querySelector("#DiningBtn");
     diningBtn.addEventListener('click', (e) => {
         e.preventDefault();
@@ -80,14 +84,12 @@ function diningStuff() {
         if (comparator.size === Object.keys(diningInStorage).length){
             window.alert("You selected everything. Please leave at least one option available.");
         } else {
-        // The final change will be made in getResults, which will eventually show all the restaurants
-        // that fit the data that's left
+        /* The final change will be made in getResults, which will eventually show all the restaurants
+        that fit the data that's left. */
         getResults(foodData)
         }
     });
 }
-
-// document.querySelector(".login-btn").addEventListener("click", redirect);
 
 function redirect() {
     var url = "https://cse341-restaurant-picker.herokuapp.com/login";
