@@ -19,11 +19,7 @@ function AddIdDelete(value) {
     })
 }
 
-function closeForm()
-{
-       setInterval(600000)
-       document.querySelector(".EditForm").style.display = "none";
-}
+
 
 function renderEditForm(data)
 {
@@ -57,6 +53,110 @@ function renderEditForm(data)
     editDiv.innerHTML= ele;
 }
 
+
+function createNewResturant()
+{
+    document.querySelector(".createNewRest").addEventListener('click',function(){
+        console.log("hello")
+        var ele=`<form class="createForm">
+                    <input type="hidden" name="cuisine" value="62b9f1ba647a293727fb4f98">
+                    <label>Name of Resturant</label>
+                    <input type="text" name="restaurantName" >
+                    
+                    <label>Description</label>
+                    <input type="text" name="description" >
+
+                    <label>Address</label>
+                    <input type="text" name="address" >
+
+                    <label>zipCode</label>
+                    <input type="text" name="zipCode" >
+
+                    <label>Opening Hours</label>
+                    <input type="text" name="opens" >
+                    
+                    <label>Closing Hours</label>
+                    <input type="text" name="closes" >
+                    
+                    <label>Phone</label>
+                    <input type="text" name="phoneNumber" >
+                    
+                    <label>Website</label>
+                    <input type="text" name="restaurantWebsite" >
+
+                    <label>Price Level</label>
+                    <input type="text" name="price" >
+
+                    <label>Cusine Type</label>
+                    <input type="text" name="cuisineType" >
+
+                    <label>Logo</label>
+                    <input type="text" name="imgUrl" >
+                
+                    <label>Dining Style</label>
+                    <input type="text" name="diningStyle" >
+                    
+                    <button id="editFormbtn">Register New Resturant</button>
+                </form>`;
+        document.querySelector(".newRest").innerHTML= ele;
+
+        const createform = document.querySelector('.createForm');
+        if(createform){
+        createform.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // const editForm = document.querySelector('.editForm');
+        console.log("Hit edit")
+        
+
+        let formData = new FormData(e.target);
+        const converted = Object.fromEntries(formData.entries())
+        console.log(converted)
+
+
+        fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(converted),
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log('Success:', data);
+        if(data.acknowledged)
+        {
+            alert("Your Entry was created Successfully")
+            location.reload()
+        }
+        
+        })
+        .catch((error) => {
+        console.error('Error:', error);
+        });
+
+
+
+
+
+        // fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/', {
+        // method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json',
+        // },
+        // body: JSON.stringify(converted),
+        // }).then((response) => {
+        // console.log('success');
+        // alert("Success Your Edit has been made")
+        // location.reload()
+        // }).catch(error=>alert("failed to Resgister"))
+
+
+        })}
+
+
+    })
+}
+createNewResturant()
 
 function AddIdEdit(value) {
 
