@@ -19,23 +19,23 @@ function AddIdDelete(value) {
     })
 }
 
-function closeForm()
-{
-       setInterval(600000)
-       document.querySelector(".EditForm").style.display = "none";
+function closeForm() {
+    setInterval(600000)
+    document.querySelector(".EditForm").style.display = "none";
 }
 
-function renderEditForm(data)
-{
+function renderEditForm(data) {
     console.log(data.restaurantName)
     document.querySelector(".EditForm").style.display = "block";
-    const editDiv= document.querySelector(".EditForm")
+    const editDiv = document.querySelector(".EditForm")
     // editDiv.innerHTML= "hello Edit"
-    var ele= `<form class="editForm">
+    var ele = `<form class="editForm">
     <input type="hidden" name= "_id" value="${data._id}">
     <input type="hidden" name="cuisine" value="${data.cuisine}">
-    <label>Name of Resturant</label>
+    <label>Name of Restaurant</label>
     <input type="text" name="restaurantName" value="${data.restaurantName}">
+    <label>Description</label>
+    <input type="text" name="description" value="${data.description}">
     <label>Opening Hours</label>
     <input type="text" name="opens" value="${data.opens}">
     <label>Closing Hours</label>
@@ -50,11 +50,33 @@ function renderEditForm(data)
     <input type="text" name="description" value="${data.description}">
     <label>Address</label>
     <input type="text" name="address" value="${data.address}">
-    <label>zipCode</label>
+    <label>Zip Code</label>
     <input type="text" name="zipCode" value="${data.zipCode}">
+    <label>Cuisine Type</label>
+    <select name="cuisineType">
+    <option value="${data.cuisineType}">Fast Food</option>
+    <option value="${data.cuisineType}">American</option>
+    <option value="${data.cuisineType}">Italian</option>
+    <option value="${data.cuisineType}">Mexican</option>
+    <option value="${data.cuisineType}">Asian</option>
+    <option value="${data.cuisineType}">BBQ</option>
+    </select>
+    <label>Price</label>
+    <select name="price">
+    <option value="${data.price}">$</option>
+    <option value="${data.price}">$$</option>
+    <option value="${data.price}">$$$</option>
+    </select>
+    
+    <label>Dining Style</label>
+    <select name="diningStyle">
+    <option value="${data.diningStyle}">Dine-In</option>
+    <option value="${data.diningStyle}">Drive-Thru</option>
+    <option value="${data.diningStyle}">Dine-In & Drive-Thru</option>
+    </select>
     <button id="editFormbtn">Submit Edit</button>
     </form>`;
-    editDiv.innerHTML= ele;
+    editDiv.innerHTML = ele;
 }
 
 
@@ -73,43 +95,44 @@ function AddIdEdit(value) {
         imgUrl: "../pic.jpg"
     };
     fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value)
-    .then(response => response.json())
-    .then(data => {
-        console.log(data)
-        renderEditForm(data)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            renderEditForm(data)
 
 
-        const editbtn = document.querySelector('.editForm');
-        if(editbtn){
-        editbtn.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // const editForm = document.querySelector('.editForm');
-        console.log("Hit edit")
-        
-        
-
-        let formData = new FormData(e.target);
-        const converted = Object.fromEntries(formData.entries())
-
-        fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(converted),
-        }).then(() => {
-        console.log('success');
-        alert("Success Your Edit has been made")
-        location.reload()
-        })
-
-        })}
+            const editbtn = document.querySelector('.editForm');
+            if (editbtn) {
+                editbtn.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // const editForm = document.querySelector('.editForm');
+                    console.log("Hit edit")
 
 
 
-    }).then((data)=>{
-      
-    });
+                    let formData = new FormData(e.target);
+                    const converted = Object.fromEntries(formData.entries())
+
+                    fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(converted),
+                    }).then(() => {
+                        console.log('success');
+                        alert("Success Your Edit has been made")
+                        location.reload()
+                    })
+
+                })
+            }
+
+
+
+        }).then((data) => {
+
+        });
 
     // fetch('https://cse341-restaurant-picker.herokuapp.com/restaurants/' + value, {
     //     method: 'PUT',
@@ -157,7 +180,7 @@ function renderAllResturant() {
                 const value = renderAResturant(entry)
                 var btn = document.getElementById(`${entry._id}delete`)
                 var btn2 = document.getElementById(`${entry._id}edit`)
-            
+
                 btn.addEventListener("click", function () {
 
                     AddIdDelete(entry._id)
