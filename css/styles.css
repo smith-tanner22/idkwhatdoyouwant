@@ -256,6 +256,57 @@ footer {
 
 }
 
+/* ADMIN PAGE */
+.All_Resturant {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+}
+
+.adminTitle {
+    font-size: 3em;
+    margin-top: 0px;
+    text-align: center;
+}
+
+.editBtn {
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #F1F7EE;
+    color: black;
+    border: 1.5px solid #ffbf00;
+    padding: 5px 15px 5px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px #F1F1F1;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: .5s ease;
+}
+
+.editBtn:hover {
+    background-color: #ffbf00;
+    color: black;
+}
+
+.deleteBtn {
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #F1F7EE;
+    color: #f2545b;
+    border: 1.5px solid #f2545b;
+    padding: 5px 15px 5px 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px #F1F1F1;
+    cursor: pointer;
+    margin-right: 20px;
+    transition: .5s ease;
+}
+
+.deleteBtn:hover {
+    background-color: #f2545b;
+    color: #F1F7EE;
+}
 
 /* Desktop CSS goes here */
 /* .logo {
