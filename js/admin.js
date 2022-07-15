@@ -7,7 +7,6 @@ import {
     loadHeaderFooter
 } from "./utils.js";
 loadHeaderFooter();
-console.log("hhelo Admin")
 
 function AddIdDelete(value) {
 
@@ -57,19 +56,17 @@ function renderAResturant(resturant) {
     heaed.innerHTML = resturant.restaurantName
     btn1.innerHTML = "Delete"
     btn1.setAttribute("id", resturant._id + "delete")
+    btn1.classList.add("deleteBtn")
     var btn2 = document.createElement('button')
     btn2.innerHTML = "Edit"
     btn2.setAttribute("id", resturant._id + "edit")
+    btn2.classList.add("editBtn")
     div.appendChild(heaed)
     div.appendChild(btn1)
     div.appendChild(btn2)
     ele.appendChild(div)
 
-
     return ele
-
-
-
 
 }
 
