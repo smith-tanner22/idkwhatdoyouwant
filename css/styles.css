@@ -283,6 +283,8 @@ button {
     transition-duration: 0.4s;
 }
 
+
+
 button:hover {
     background-color: #f5eb83;
     cursor: pointer;
@@ -300,10 +302,18 @@ footer {
 }
 
 .resultsContainer {
-    background-color: #f5eb83;
+    background-color: #f1f7ee;
     border-radius: 25px;
     padding: 2px;
     margin-bottom: 10px;
+    transition-duration: 0.4s;
+}
+
+.resultsContainer:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    transform: scale(1.05);
+    border: 2px solid black;
+
 }
 
 .resultsContainer img {
