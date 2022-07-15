@@ -15,7 +15,7 @@ function generateCuisineForm(data, outputContainer) {
 
     // The set is an object, so we loop through and save those unique types into the array.
     cuisineSet.forEach(thing => formData.push(thing));
-    
+
     // Send each array item to populate the HTML we set up with some selectable buttons.
     formData = formData.map(cuisineType => populateForm(cuisineType, ("." + nameC + "Container")));
     document.querySelector("." + nameC + "Container").innerHTML = formData.sort().join(' ');
@@ -79,10 +79,10 @@ function generateDiningForm(data, outputContainer) {
         /* Here I don't let the "Dine-in & Drive-thru" option to be available because if it
         is selectable, then that means the user wants neither dine-in nor drive-thru, which
         makes no sense. */
-        formData = formData.map(data => { 
+        formData = formData.map(data => {
             if (data != "Dine-in & Drive-thru") {
                 console.log(data);
-            return populateForm(data, ("." + nameD + "Container"));
+                return populateForm(data, ("." + nameD + "Container"));
             }
         });
         document.querySelector("." + nameD + "Container").innerHTML = formData.join(' ');
@@ -92,10 +92,10 @@ function generateDiningForm(data, outputContainer) {
     else {
         data.map(entry => diningSet.add(entry.diningStyle));
         diningSet.forEach(time => formData.push(time));
-        formData = formData.map(data => { 
+        formData = formData.map(data => {
             if (data != "Dine-in & Drive-thru") {
                 console.log(data);
-            return populateForm(data, ("." + nameD + "Container"));
+                return populateForm(data, ("." + nameD + "Container"));
             }
         });
         document.querySelector("." + nameD + "Container").innerHTML = formData.sort().join(' ');
@@ -119,7 +119,7 @@ async function getResults(data) {
         if (filteredArray.length < 1) {
             window.alert("Sorry, nothing in your area matched your criteria.")
         } else {
-            getAllRestaurant(filteredArray);
+            getAllRestaurants(filteredArray);
             document.getElementById("title").innerHTML = "Results";
             const formData = filteredArray.map(entry => renderResults(entry));
             document.getElementById("testContainer").innerHTML = formData.sort().join(' ');
