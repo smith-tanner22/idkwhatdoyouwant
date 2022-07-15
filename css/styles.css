@@ -48,6 +48,10 @@ select {
     border: none;
 }
 
+.createForm{
+    display: flex !important;
+    flex-direction: column;
+}
 h1 {
     font-family: 'Eczar', serif;
     font-size: 2.5em;
