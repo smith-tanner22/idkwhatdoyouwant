@@ -95,3 +95,11 @@ function redirect() {
     var url = "https://cse341-restaurant-picker.herokuapp.com/login";
     window.location.href = url;
 }
+
+
+/**************** Contributers ****************/
+/*
+Kevin Whittaker - kevbotty@gmail.com
+Tanner Smith - 
+Lakeram Narine - 
+*/
